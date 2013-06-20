@@ -22,7 +22,7 @@ update:
 	@make -s pathogen
 
 pathogen:
-	@cd vim/autoload && rm pathogen.vim && curl -O https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+	@cd vim/autoload && rm pathogen.vim && curl -Ss -O https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 
 setup_cron:
 	@touch tmpcron
