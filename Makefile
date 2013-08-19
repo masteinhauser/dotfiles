@@ -1,12 +1,15 @@
+
+LIST := $(wildcard _*)
+LIST2 = $(LIST:_%=%) # Remove leading underscore, added back in below
+
 all: update
 install:
-	@for file in *; do \
-		if [ '$$file' != 'Makefile' ] && [ '$$file' != 'readme.md' ]; then \
-			if [ -e "$$HOME/.$$file" ]; then \
-				echo "$$HOME/.$$file exists"; \
-			else \
-				ln -s "$$PWD/$$file" "$$HOME/.$$file"; \
-			fi \
+	@for file in $(LIST2); do \
+		if [ -e "$$HOME/.$$file" ]; then \
+			echo "$$HOME/.$$file exists"; \
+		else \
+			echo ln -s "$$PWD/_$$file" "$$HOME/.$$file"; \
+			ln -sf "$$PWD/_$$file" "$$HOME/.$$file"; \
 		fi \
 		done
 	@git submodule update --init
@@ -17,12 +20,12 @@ powerline_font:
 
 update:
 	@git submodule foreach git checkout master
-	@cd vim/bundle/powerline && git checkout develop
+	@cd _vim/bundle/powerline && git checkout develop
 	@git submodule foreach git pull
 	@make -s pathogen
 
 pathogen:
-	@cd vim/autoload && rm pathogen.vim && curl -Ss -O https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+	@cd _vim/autoload && rm pathogen.vim && curl -Ss -O https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 
 setup_cron:
 	@touch tmpcron
