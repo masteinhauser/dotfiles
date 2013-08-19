@@ -13,6 +13,7 @@ export PATH=$PATH:$GEM_HOME/bin
 
 export BERKSHELF_PATH=$HOME/.berkshelf
 
-export GOROOT=$HOME/go
-export GOPATH=$GOROOT/bin
-export PATH=$PATH:$GOROOT/bin
+export GOROOT=/usr/lib/go
+export GOPATH=$HOME/go/bin
+export PATH=$PATH:$GOPATH
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
