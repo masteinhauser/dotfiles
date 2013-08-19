@@ -1,12 +1,12 @@
 [submodule "_vim/bundle/powerline"]
 	path = _vim/bundle/powerline
-	url = git://github.com/Lokaltog/vim-powerline.git
+	url = https://github.com/Lokaltog/vim-powerline.git
 [submodule "_vim/bundle/vim-colors-solarized"]
 	path = _vim/bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized
 [submodule "_vim/bundle/vim-golang"]
 	path = _vim/bundle/vim-golang
 	url = https://github.com/jnwhiteh/vim-golang.git
-[submodule "vim/bundle/nerdtree"]
-	path = vim/bundle/nerdtree
+[submodule "_vim/bundle/nerdtree"]
+	path = _vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
