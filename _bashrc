@@ -14,6 +14,21 @@ export PATH=$PATH:$GEM_HOME/bin
 export BERKSHELF_PATH=$HOME/.berkshelf
 
 export GOROOT=/usr/lib/go
-export GOPATH=$HOME/go/bin
+export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+
+
+EDITOR=vim
+
+# ssh wrapper that rename current tmux window to the hostname of the
+# remote host.
+ssh() {
+    if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
+            tmux rename-window "$*"
+            command ssh "$@"
+            tmux set-window-option automatic-rename "on" 1>/dev/null
+    else
+            command ssh "$@"
+    fi
+}
