@@ -19,3 +19,9 @@
 [submodule "_vim/bundle/syntastic"]
 	path = _vim/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
+[submodule "_vim/bundle/funcoo"]
+	path = _vim/bundle/funcoo
+	url = https://github.com/rizzatti/funcoo.vim.git
+[submodule "_vim/bundle/dash"]
+	path = _vim/bundle/dash
+	url = https://github.com/rizzatti/dash.vim.git
