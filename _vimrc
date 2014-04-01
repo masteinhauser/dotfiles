@@ -7,6 +7,7 @@ filetype off
 filetype plugin indent off
 set runtimepath+=$GOROOT/misc/vim
 filetype plugin indent on
+filetype indent plugin on
 
 syntax on
 set nu " Default to line numbers on
@@ -30,3 +31,11 @@ let g:SuperTabDefaultCompletionType = "context"
 
 " Markdown
 au BufRead,BufNewFile *.md set filetype=markdown
+
+autocmd Filetype dot setlocal ts=2 sts=2 sw=2
+autocmd Filetype html setlocal ts=2 sts=2 sw=2
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype ruby setlocal expandtab ts=2 sts=2 sw=2
+
+" Pretty Print JSON in files
+map jpp :%!python -m json.tool<CR>
