@@ -1,4 +1,4 @@
-call pathogen#incubate()
+execute pathogen#infect()
 
 " Some Linux distributions set filetype in /etc/vimrc.
 "   " Clear filetype flags before changing runtimepath to force Vim to reload
@@ -8,6 +8,7 @@ filetype plugin indent off
 set runtimepath+=$GOROOT/misc/vim
 filetype plugin indent on
 filetype indent plugin on
+filetype on
 
 syntax on
 set nu " Default to line numbers on
