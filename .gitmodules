@@ -25,3 +25,6 @@
 [submodule "_vim/bundle/dash"]
 	path = _vim/bundle/dash
 	url = https://github.com/rizzatti/dash.vim.git
+[submodule "_vim/bundle/vim-elixir"]
+	path = _vim/bundle/vim-elixir
+	url = https://github.com/elixir-lang/vim-elixir.git
