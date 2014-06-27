@@ -34,11 +34,4 @@ ssh() {
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-# Brightcove SysEng Perforce
-export P4EDITOR='vim +/"<enter description here>" -c "%s/<enter description here>/null\r Reviewer:syseng/g" -c "%s/null/ /g"'
-export P4USER='msteinhauser'
-export P4PORT='perforce.vidmark.local:1666'
-export P4CONFIG="$HOME/p4config"
-export P4CLIENT="`hostname`"
-
 [ -f `brew --prefix`/etc/bash_completion ] && source `brew --prefix`/etc/bash_completion
