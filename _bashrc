@@ -34,4 +34,16 @@ ssh() {
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
+# Python Virtualenv
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/code
+source /usr/local/bin/virtualenvwrapper.sh
+
 [ -f `brew --prefix`/etc/bash_completion ] && source `brew --prefix`/etc/bash_completion
+[ -d $HOME/.bash_completion.d ] && source $HOME/.bash_completion.d/*
+
+# Shortcut for searching dash
+bash_dash() {
+    open dash://$1
+}
+alias dash=bash_dash
