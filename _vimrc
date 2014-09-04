@@ -142,7 +142,7 @@ elseif has('mac')
 endif
 
 autocmd FileType js  nmap <Leader>g :!node "%"<cr>
-autocmd FileType markdown nmap <leader>g :silent !open -a Marked.app '%:p'<cr>
+autocmd FileType markdown nmap <leader>g :silent !open -a Marked.app '%:p'<cr>:redraw!<cr>
 autocmd FileType coffee  nmap <Leader>g :coffee "%"<cr>
 autocmd FileType groovy  nmap <Leader>g :!groovy "%"<cr>
 
