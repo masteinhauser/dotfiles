@@ -17,7 +17,6 @@ export GOPATH=$HOME/go
 export PATH=$PATH:#{`#{bin}/go env GOROOT`.chomp}/bin
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
-
 EDITOR=vim
 
 # ssh wrapper that rename current tmux window to the hostname of the
@@ -35,6 +34,7 @@ ssh() {
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # Python Virtualenv
+export PYTHONDONTWRITEBYTECODE=True
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/code
 source /usr/local/bin/virtualenvwrapper.sh
@@ -47,3 +47,10 @@ bash_dash() {
     open dash://$1
 }
 alias dash=bash_dash
+
+# docbook
+export PATH=$PATH:/Users/myles/docbook
+export SHORT_ATTENTION_SPAN_DOCBOOK_PATH="/Users/myles/docbook"
+
+# helpful alias
+alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'

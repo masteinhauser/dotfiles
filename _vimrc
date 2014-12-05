@@ -41,8 +41,6 @@ set smarttab                             "use shiftwidth and softtabstop to inse
 set shiftround                           "when at 3 spaces, and I hit > ... go to 4, not 5
 set nowrap                               "no wrapping
 
-au FileType python setl sw=4 sts=4 et
-
 set backspace=indent,eol,start           "allow backspacing over everything in insert mode
 set cindent                              "recommended seting for automatic C-style indentation
 set autoindent                           "automatic indentation in non-C files
@@ -104,6 +102,10 @@ if has("gui_running")
   endif
 endif
 
+au FileType python setl ts=4 sw=4 sts=4 et
+au FileType xml setl wrap linebreak
+let NERDTreeIgnore = ['\.pyc$']
+
 " ----------- Shortcut Key Configuration ----------------------------------
 let mapleader = ","                      "remap leader to ',' which is much easier than '\'
 
@@ -142,7 +144,7 @@ elseif has('mac')
 endif
 
 autocmd FileType js  nmap <Leader>g :!node "%"<cr>
-autocmd FileType markdown nmap <leader>g :silent !open -a Marked.app '%:p'<cr>:redraw!<cr>
+autocmd FileType markdown nmap <leader>g :exec "silent !open -a Marked.app '%:p'" | exec "redraw!"
 autocmd FileType coffee  nmap <Leader>g :coffee "%"<cr>
 autocmd FileType groovy  nmap <Leader>g :!groovy "%"<cr>
 
@@ -150,3 +152,25 @@ autocmd FileType groovy  nmap <Leader>g :!groovy "%"<cr>
 autocmd vimenter * if !argc() | NERDTree | endif
 map <C-n> :NERDTreeToggle<CR>
 
+" --- Support auto-pastemode even in tmux ---
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
