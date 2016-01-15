@@ -1,5 +1,3 @@
-execute pathogen#infect()
-
 " Cross-platform Vim Configuration goes in this file
 "
 " Contents
@@ -9,11 +7,30 @@ execute pathogen#infect()
 " Plugin Configuration
 " Private Configuration
 
+" ----------- Vundle Configuration ----------------------------------
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'ntpeters/vim-better-whitespace'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+
 " ----------- Main Configuration ----------------------------------
+au BufRead,BufNewFile *.md set filetype=markdown
 
 set nocompatible                         "don't need to keep compatibility with Vi
 filetype plugin indent on                "enable detection, plugins and indenting in one step
 syntax on                                "Turn on syntax highlighting
+set synmaxcol=128                        " Syntax coloring lines that are too long just slows down the world
+
+set lazyredraw                           " to avoid scrolling problems
 set ruler                                "Turn on the ruler
 set number                               "Show line numbers
 set cursorline                           "underline the current line in the file
@@ -21,6 +38,7 @@ set cursorcolumn                         "highlight the current column. Visible 
 set colorcolumn=80
 
 set background=dark                      "make vim use colors that look good on a dark background
+"set background=light                      "make vim use colors that look good on a light background
 
 set showcmd                              "show incomplete cmds down the bottom
 set showmode                             "show current mode down the bottom
@@ -50,26 +68,17 @@ set noerrorbells                         "don't make noise
 set wildmenu                             "make tab completion act more like bash
 set wildmode=list:longest                "tab complete to longest common string, like bash
 
-"set mouse-=a                             "disable mouse automatically entering visual mode
-set mouse=a                              "enable mouse automatically entering visual mode
+set mouse-=a                             "disable mouse automatically entering visual mode
+"set mouse=a                              "enable mouse automatically entering visual mode
 set hidden                               "allow hiding buffers with unsaved changes
 set cmdheight=2                          "make the command line a little taller to hide 'press enter to viem more' text
 
 set clipboard=unnamed                    "Use system clipboard by default
+set viminfo='20,<1000,s1000              "Keep up to 1000 lines or 1000KB in copy buffer
 
 " Set up the backup directories to a central place.
-set backupdir=$HOME/tmp/backup//
-set directory=$HOME/tmp/backup//
-
-" Autoremove trailing whitespace
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-
-autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+set backupdir=$HOME/tmp/backup/
+set directory=$HOME/tmp/backup/
 
 " ----------- Visual Configuration ----------------------------------
 " colorscheme mycontrast
@@ -104,6 +113,7 @@ endif
 
 au FileType python setl ts=4 sw=4 sts=4 et
 au FileType xml setl wrap linebreak
+au FileType markdown set tw=79
 let NERDTreeIgnore = ['\.pyc$']
 
 " ----------- Shortcut Key Configuration ----------------------------------
@@ -134,6 +144,8 @@ map jpp :%!python -m json.tool<CR>
 nmap <silent> <leader>d <Plug>DashSearch
 
 " ----------- Launch configs ---------------------------------------
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+
 autocmd FileType ruby nmap <Leader>g :!ruby "%"<cr>
 autocmd FileType go  nmap <Leader>g :!go run "%"<cr>
 
@@ -144,7 +156,7 @@ elseif has('mac')
 endif
 
 autocmd FileType js  nmap <Leader>g :!node "%"<cr>
-autocmd FileType markdown nmap <leader>g :exec "silent !open -a Marked.app '%:p'" | exec "redraw!"
+autocmd FileType markdown nmap <leader>g :silent !open -a Marked\ 2.app '%:p'<cr>
 autocmd FileType coffee  nmap <Leader>g :coffee "%"<cr>
 autocmd FileType groovy  nmap <Leader>g :!groovy "%"<cr>
 

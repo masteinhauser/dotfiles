@@ -5,8 +5,11 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+HISTFILE="${HOME}/.history/$(date -u +%Y/%m/%d.%H.%M.%S)_${HOSTNAME_SHORT}_$$"
+
 alias ls='ls'
-PS1='[\u@\h \W]\$ '
+#PS1='[\u@\h \W]\$ '
+PS1='[\W]\$ '
 
 export GEM_HOME=$HOME/.gem/ruby/2.0.0
 export PATH=$PATH:$GEM_HOME/bin
@@ -33,14 +36,15 @@ ssh() {
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-# Python Virtualenv
-export PYTHONDONTWRITEBYTECODE=True
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/code
-source /usr/local/bin/virtualenvwrapper.sh
-
+# homebrew
 [ -f `brew --prefix`/etc/bash_completion ] && source `brew --prefix`/etc/bash_completion
 [ -d $HOME/.bash_completion.d ] && source $HOME/.bash_completion.d/*
+
+# Shortcut for searching lastpass
+bash_lpass_show() {
+    lpass show -c --password $1
+}
+alias lp=bash_lpass_show
 
 # Shortcut for searching dash
 bash_dash() {
@@ -54,3 +58,7 @@ export SHORT_ATTENTION_SPAN_DOCBOOK_PATH="/Users/myles/docbook"
 
 # helpful alias
 alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
+
+alias yama='mosh --server=/usr/local/bin/mosh-server yama'
+
+eval "$(direnv hook bash)"

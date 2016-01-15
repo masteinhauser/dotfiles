@@ -1,5 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/myles/code/bbg/ursula/roles/logging/defaults'
-let g:netrw_dirhist_2='/Users/myles/code/github/phoenixframework/upgrade-app/web/views'
-let g:netrw_dirhist_3='/Users/myles/code/github/phoenixframework/upgrade-app/web/controllers'
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/myles/code/bbg/sitecontroller-generator/roles/common/tasks'
+let g:netrw_dirhist_2='/Users/myles/code/bbg/sitecontroller-generator/roles/config/templates/host_vars'
+let g:netrw_dirhist_3='/Users/myles/code/bbg/sitecontroller-generator/envs/zelda.tor01'
+let g:netrw_dirhist_4='/Users/myles/code/bbg/sitecontroller-generator/envs/zelda.tor01/group_vars'
+let g:netrw_dirhist_5='/Users/myles/.virtualenvs'
+let g:netrw_dirhist_6='/Users/myles/code/bbg/sitecontroller-generator/ansible'
+let g:netrw_dirhist_7='/Users/myles/code/bbg/sitecontroller-generator/plugins/filters'
