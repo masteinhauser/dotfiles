@@ -28,7 +28,7 @@ au BufRead,BufNewFile *.md set filetype=markdown
 set nocompatible                         "don't need to keep compatibility with Vi
 filetype plugin indent on                "enable detection, plugins and indenting in one step
 syntax on                                "Turn on syntax highlighting
-set synmaxcol=128                        " Syntax coloring lines that are too long just slows down the world
+set synmaxcol=256                        " Syntax coloring lines that are too long just slows down the world
 
 set lazyredraw                           " to avoid scrolling problems
 set ruler                                "Turn on the ruler
@@ -77,8 +77,8 @@ set clipboard=unnamed                    "Use system clipboard by default
 set viminfo='20,<1000,s1000              "Keep up to 1000 lines or 1000KB in copy buffer
 
 " Set up the backup directories to a central place.
-set backupdir=$HOME/tmp/backup/
-set directory=$HOME/tmp/backup/
+set backupdir=$HOME/tmp/vim-backup/
+set directory=$HOME/tmp/vim-backup/
 
 " ----------- Visual Configuration ----------------------------------
 " colorscheme mycontrast
