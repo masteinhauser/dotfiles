@@ -9,18 +9,7 @@ HISTFILE="${HOME}/.history/$(date -u +%Y/%m/%d.%H.%M.%S)_${HOSTNAME_SHORT}_$$"
 
 alias ls='ls'
 #PS1='[\u@\h \W]\$ '
-PS1='[\W]\$ '
-
-export GEM_HOME=$HOME/.gem/ruby/2.0.0
-export PATH=$PATH:$GEM_HOME/bin
-
-export BERKSHELF_PATH=$HOME/.berkshelf
-
-export GOPATH=$HOME/go
-export PATH=$PATH:#{`#{bin}/go env GOROOT`.chomp}/bin
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-
-EDITOR=vim
+PS1='[\W] ${AWS_PROFILE} \$ '
 
 # ssh wrapper that rename current tmux window to the hostname of the
 # remote host.
@@ -34,17 +23,47 @@ ssh() {
     fi
 }
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
-# homebrew
-[ -f `brew --prefix`/etc/bash_completion ] && source `brew --prefix`/etc/bash_completion
-[ -d $HOME/.bash_completion.d ] && source $HOME/.bash_completion.d/*
-
-# Shortcut for searching lastpass
-bash_lpass_show() {
-    lpass show -c --password $1
+function seecert () {
+  dscacheutil -q host -a name $1
+  (openssl s_client -showcerts -servername $1 -connect $1:443 <<< "Q" | openssl x509 -text | grep -iA2 "Validity")
 }
-alias lp=bash_lpass_show
+
+# Handle Mac platforms
+CPU=$(uname -p)
+if [[ "$CPU" == "arm" ]]; then
+    export PATH="/opt/homebrew/bin:$PATH"
+    export EDITOR=/opt/homebrew/bin/vim
+    alias oldbrew=/usr/local/bin/brew
+
+    export PYENV_ROOT="$HOME/.pyenv"
+else
+    export PATH="/usr/local/bin:$PATH"
+    export EDITOR=/usr/local/bin/vim
+    export PIP_CACHE_DIR="$HOME/Library/Caches/pip.x86-64"
+    export PYENV_ROOT="$HOME/.pyenv.x86-64"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+
+    alias brew="/usr/local/bin/brew"
+fi
+
+# load bash tab completion
+export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
+[[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+
+export PATH=$HOME/.local/bin:$HOME/bin:$PATH
+
+# pyenv
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init --path --no-rehash bash)"
+  eval "$(pyenv init - --no-rehash  bash)"
+fi
+
+if which pyenv-virtualenv-init > /dev/null; then
+  eval "$(pyenv virtualenv-init - bash)"
+fi
+
+# asdf lang installer
+[[ -r "$(brew --prefix)/opt/asdf/libexec/asdf.sh" ]] && . "$(brew --prefix)/opt/asdf/libexec/asdf.sh"
 
 # Shortcut for searching dash
 bash_dash() {
@@ -52,13 +71,11 @@ bash_dash() {
 }
 alias dash=bash_dash
 
-# docbook
-export PATH=$PATH:/Users/myles/docbook
-export SHORT_ATTENTION_SPAN_DOCBOOK_PATH="/Users/myles/docbook"
-
 # helpful alias
 alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
-
-alias yama='mosh --server=/usr/local/bin/mosh-server yama'
+alias rsync-sudo='rsync --rsync-path="sudo rsync"'
 
 eval "$(direnv hook bash)"
+
+
+source /Users/myles/.docker/init-bash.sh || true # Added by Docker Desktop
